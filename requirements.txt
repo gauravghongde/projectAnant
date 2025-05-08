@@ -4,4 +4,4 @@ oauth2client==4.1.3
 TTS==0.17.5
 gpt4all==1.0.8
 spacy==3.6.1
-genmo==0.1.7
+genmo==0.0.1a1
