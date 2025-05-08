@@ -1,0 +1,7 @@
+moviepy
+google-api-python-client
+oauth2client
+TTS
+gpt4all            # for script & metadata generation
+spacy              # for tag extraction
+genmo              # for visuals generation

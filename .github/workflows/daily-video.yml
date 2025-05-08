@@ -1,0 +1,59 @@
+name: Daily Video Pipeline
+
+on:
+  schedule:
+    - cron: '30 2 * * *'    # 02:30 UTC daily → 08:00 IST
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg git jq
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          # install spaCy English model
+          python -m spacy download en_core_web_sm
+
+      - name: Generate Script
+        run: python scripts/generate_script.py
+
+      - name: Text-to-Speech
+        run: python scripts/tts.py
+
+      - name: Generate Visuals
+        run: python scripts/generate_visuals.py
+
+      - name: Assemble Video
+        run: python scripts/assemble.py
+
+      - name: Generate Metadata
+        run: python scripts/generate_metadata.py
+
+      - name: Load Metadata into Outputs
+        id: meta
+        run: |
+          echo "::set-output name=TITLE::$(jq -r '.titles[0]' scripts/metadata.json)"
+          echo "::set-output name=DESC::$(jq -r '.description' scripts/metadata.json)"
+          echo "::set-output name=TAGS::$(jq -r '.tags | join(",")' scripts/metadata.json)"
+
+      - name: Upload to YouTube
+        env:
+          YT_CREDENTIALS_JSON: ${{ secrets.YT_CREDENTIALS_JSON }}
+          VIDEO_TITLE:        ${{ steps.meta.outputs.TITLE }}
+          VIDEO_DESC:         ${{ steps.meta.outputs.DESC }}
+          VIDEO_TAGS:         ${{ steps.meta.outputs.TAGS }}
+        run: python scripts/upload.py
