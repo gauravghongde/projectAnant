@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import json
+from gpt4all import GPT4All
 
 # Paths and models
-MODEL = "models/gpt4all-lora-unfiltered.bin"
+MODEL = "ggml-model-gpt4all-falcon"  # Default model that comes with gpt4all
 SCRIPT_PATH = "scripts/today.txt"
 META_OUT = "scripts/metadata.json"
 
 def run_gpt4all(prompt, max_tokens=200):
-    """Call gpt4all-cli with a prompt and return its stdout."""
-    result = subprocess.run(
-        ["gpt4all-cli", "--model", MODEL, "--prompt", prompt, "--n_predict", str(max_tokens)],
-        capture_output=True, text=True, check=True
-    )
-    return result.stdout.strip()
+    """Use GPT4All Python API with a prompt and return generated text."""
+    model = GPT4All(MODEL)
+    return model.generate(prompt, max_tokens=max_tokens)
 
 def generate_titles(script):
     prompt = (

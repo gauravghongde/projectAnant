@@ -25,9 +25,23 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install -r requirements.txt
+          pip install --no-cache-dir --only-binary :all: -r requirements.txt
           # install spaCy English model
           python -m spacy download en_core_web_sm
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Download models
+        run: |
+          mkdir -p models
+          # Download model for TTS
+          python -c "from TTS.utils.manage import ModelManager; ModelManager().download_model('tts_models/en/ljspeech/tacotron2-DDC')"
+          # GPT4All models are downloaded automatically on first use
 
       - name: Generate Script
         run: python scripts/generate_script.py

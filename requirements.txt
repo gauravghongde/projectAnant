@@ -1,7 +1,7 @@
-moviepy
-google-api-python-client
-oauth2client
-TTS
-gpt4all            # for script & metadata generation
-spacy              # for tag extraction
-genmo              # for visuals generation
+moviepy==1.0.3
+google-api-python-client==2.97.0
+oauth2client==4.1.3
+TTS==0.17.5
+gpt4all==1.0.8
+spacy==3.6.1
+genmo==0.1.7
