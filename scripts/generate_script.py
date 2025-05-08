@@ -8,7 +8,7 @@ TOPICS_CSV   = "scripts/topics.csv"
 SCRIPT_FILE  = "scripts/today.txt"
 
 # LLM model
-MODEL = "ggml-model-gpt4all-falcon"  # Default model that comes with gpt4all
+MODEL = "orca-mini-3b-gguf2-q4_0"  # Updated to a reliable available model
 
 def pick_and_mark_topic(csv_path):
     """Read CSV, pick first TBD topic, mark it DEPLOYED, and rewrite CSV."""

@@ -4,7 +4,7 @@ import json
 from gpt4all import GPT4All
 
 # Paths and models
-MODEL = "ggml-model-gpt4all-falcon"  # Default model that comes with gpt4all
+MODEL = "orca-mini-3b-gguf2-q4_0"  # Updated to a reliable available model
 SCRIPT_PATH = "scripts/today.txt"
 META_OUT = "scripts/metadata.json"
 
