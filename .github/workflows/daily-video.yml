@@ -45,6 +45,18 @@ jobs:
       - name: Generate Script
         run: python scripts/generate_script.py
 
+      - name: Debug - Check Script File
+        run: |
+          echo "Checking if script file exists:"
+          ls -la scripts/
+          echo "Content of script file (if it exists):"
+          if [ -f "scripts/today.txt" ]; then
+            head -n 20 scripts/today.txt
+            echo "File size: $(wc -c < scripts/today.txt) bytes"
+          else
+            echo "File does not exist!"
+          fi
+
       - name: Text-to-Speech
         run: python scripts/tts.py
 
