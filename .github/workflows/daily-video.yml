@@ -1,6 +1,7 @@
 name: Daily Video Pipeline
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '30 2 * * *'    # 02:30 UTC daily → 08:00 IST
 
