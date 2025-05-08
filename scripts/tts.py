@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-from TTS.api import TTS
+from gtts import gTTS
 import os
 
 INPUT = "scripts/today.txt"
-OUTPUT = "audio/narration.wav"
-MODEL = "tts_models/en/ljspeech/tacotron2-DDC"  # English-only model
+OUTPUT = "audio/narration.mp3"  # gTTS outputs MP3 files
 
 def main():
     # Create output directory if it doesn't exist
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
     
-    # Initialize TTS with English-only model
-    tts = TTS(MODEL, progress_bar=False)
-    
     # Read input text
     with open(INPUT, "r") as f:
         text = f.read()
     
-    # Generate speech
-    tts.tts_to_file(text=text, file_path=OUTPUT)
+    # Generate speech using Google TTS
+    tts = gTTS(text=text, lang='en', slow=False)
+    
+    # Save to file
+    tts.save(OUTPUT)
     print(f"TTS output saved to {OUTPUT}")
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ def main():
     for i in range(1, 3):
         clips.append(VideoFileClip(f"visuals/scene{i}.mp4"))
     video = concatenate_videoclips(clips, method="compose")
-    audio = AudioFileClip("audio/narration.wav")
+    audio = AudioFileClip("audio/narration.mp3")
     final = video.set_audio(audio)
     os.makedirs("output", exist_ok=True)
     final.write_videofile("output/output.mp4", codec="libx264")

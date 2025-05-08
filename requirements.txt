@@ -1,7 +1,7 @@
 moviepy
 google-api-python-client
 oauth2client
-TTS<0.14.0  # Older versions have fewer dependencies
+gTTS
 gpt4all
 spacy
 genmo
