@@ -39,9 +39,8 @@ jobs:
       - name: Download models
         run: |
           mkdir -p models
-          # Download model for TTS
-          python -c "from TTS.utils.manage import ModelManager; ModelManager().download_model('tts_models/en/ljspeech/tacotron2-DDC')"
           # GPT4All models are downloaded automatically on first use
+          # No need to download TTS models as we're using gTTS
 
       - name: Generate Script
         run: python scripts/generate_script.py
